@@ -1,4 +1,20 @@
 <div class="container">
-  <div>{{customerId}}</div>
-  <div>{{customer | json}}</div>
+  <h2>Customer Details</h2>
+  <table class="table table-bordered">
+
+    <tbody>
+    <tr>
+      <td>Customer ID</td>
+      <td>{{customerId}}</td>
+    </tr>
+    <tr>
+      <td>Name</td>
+      <td>{{customer.name}}</td>
+    </tr>
+    <tr>
+      <td>Email</td>
+      <td>{{customer.email}}</td>
+    </tr>
+    </tbody>
+  </table>
 </div>

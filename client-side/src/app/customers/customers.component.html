@@ -1,54 +1,79 @@
-<div class="container mt-2">
-  <ng-container *ngIf="customers | async as listCustomers; else failureOrLading">
-    <div class="card">
-      <div class="card-header">Customers</div>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+
+
+<div class="container mt-5">
+  <ng-container *ngIf="customers | async as listCustomers; else failureOrLoading">
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <i class="bi bi-people"></i> Customers
+      </div>
       <div class="card-body">
         <div *ngIf="searchFormGroup">
-          <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()">
+          <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()" class="mb-3">
             <div class="input-group">
-              <label class="input-group-text">Keyword :</label>
-              <input type="text" formControlName="keyword" class="form-control">
+              <span class="input-group-text"><i class="bi bi-search"></i></span>
+              <input type="text" formControlName="keyword" class="form-control" placeholder="Enter keyword">
               <button class="btn btn-info">
-                <i class="bi bi-search"></i>
+                <i class="bi bi-search"></i> Search
               </button>
             </div>
           </form>
         </div>
-        <table class="table">
-          <thead>
-          <tr>
-            <th>ID</th><th>Name</th><th>Email</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let c of customers | async">
-            <td>{{c.id}}</td>
-            <td>{{c.name}}</td>
-            <td>{{c.email}}</td>
-            <td>
-              <button (click)="handleDeleteCustomer(c)" class="btn btn-danger">
-                <i class="bi bi-trash"></i>
-              </button>
-            </td>
-            <td>
-              <button (click)="handleCustomerAccounts(c)" class="btn btn-success">
-                Accounts
-              </button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let c of customers | async">
+              <td>{{c.id}}</td>
+              <td>{{c.name}}</td>
+              <td>{{c.email}}</td>
+              <td>
+                <div class="btn-group" role="group" aria-label="Actions">
+                  <button (click)="handleDeleteCustomer(c)" class="btn btn-danger btn-sm" title="Delete Customer">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                  <button (click)="handleCustomerAccounts(c)" class="btn btn-success btn-sm" title="View Accounts">
+                    <i class="bi bi-wallet2"></i> Accounts
+                  </button>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </ng-container>
-  <ng-template #failureOrLading>
+  <ng-template #failureOrLoading>
     <ng-container *ngIf="errorMessage; else loading">
-      <div class="text-danger">
-        {{errorMessage}}
+      <div class="alert alert-danger mt-3">
+        <i class="bi bi-exclamation-circle"></i> {{errorMessage}}
       </div>
     </ng-container>
     <ng-template #loading>
-      Loading .....
+      <div class="text-center mt-3">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
     </ng-template>
   </ng-template>
 </div>
+</body>
+</html>
